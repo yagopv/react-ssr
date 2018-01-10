@@ -1,30 +1,16 @@
-const path = require("path");
+const path = require('path');
+const merge = require('webpack-merge');
+const baseConfig = require('./webpack.base.js');
 
-module.exports = {
+const config = {
   // Tell webpack where is the entry point
-  entry: "./src/client/index.js",
+  entry: './src/client/client.js',
 
   // Tell webpack where to put the output file generated
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "public")
-  },
-
-  // Tell webpack to run babel on every file it runs through
-  module: {
-    rules: [
-      {
-        test: /\.js?$/,
-        loader: "babel-loader",
-        exclude: /node_modules/,
-        options: {
-          presets: [
-            "react",
-            "stage-0",
-            ["env", { targets: { browsers: ["last 2 versions"] } }]
-          ]
-        }
-      }
-    ]
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'public')
   }
 };
+
+module.exports = merge(baseConfig, config);
