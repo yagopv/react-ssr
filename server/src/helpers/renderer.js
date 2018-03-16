@@ -16,12 +16,16 @@ export default (req, store) => {
     </Provider>
   );
 
+  // INITIAL_STATE for the browser app
   return `
     <html>
       <head></head>
       <meta name="viewport" content="width=device-width">
       <body>
         <div id="root">${content}</div>
+        <script>
+          window.INITIAL_STATE = ${JSON.stringify(store.getState())}
+        </script>
         <script src="bundle.js"></script>
       </body>
     </html>
