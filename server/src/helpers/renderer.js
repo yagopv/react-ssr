@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
+import serialize from 'serialize-javascript'; // Takes a string and escape script tags
 import Routes from '../client/Routes';
 
 export default (req, store) => {
@@ -17,6 +18,7 @@ export default (req, store) => {
   );
 
   // INITIAL_STATE for the browser app
+  // serialize instead JSON.stringify for avoid XSS attacks
   return `
     <html>
       <head></head>
@@ -24,7 +26,7 @@ export default (req, store) => {
       <body>
         <div id="root">${content}</div>
         <script>
-          window.INITIAL_STATE = ${JSON.stringify(store.getState())}
+          window.INITIAL_STATE = ${serialize(store.getState())}
         </script>
         <script src="bundle.js"></script>
       </body>

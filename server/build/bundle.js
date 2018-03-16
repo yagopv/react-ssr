@@ -152,6 +152,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
             case 2:
               res = _context.sent;
 
+              // const res = await axios.get('http://react-ssr-api.herokuapp.com/users/xss'); // XSS attack
 
               dispatch({
                 type: FETCH_USERS,
@@ -401,6 +402,10 @@ var _reactRedux = __webpack_require__(3);
 
 var _reactRouterConfig = __webpack_require__(1);
 
+var _serializeJavascript = __webpack_require__(19);
+
+var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
+
 var _Routes = __webpack_require__(2);
 
 var _Routes2 = _interopRequireDefault(_Routes);
@@ -425,8 +430,9 @@ exports.default = function (req, store) {
   ));
 
   // INITIAL_STATE for the browser app
-  return '\n    <html>\n      <head></head>\n      <meta name="viewport" content="width=device-width">\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + JSON.stringify(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
-};
+  // serialize instead JSON.stringify for avoid XSS attacks
+  return '\n    <html>\n      <head></head>\n      <meta name="viewport" content="width=device-width">\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
+}; // Takes a string and escape script tags
 
 /***/ }),
 /* 13 */
@@ -522,6 +528,12 @@ exports.default = function () {
       return state;
   }
 };
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = require("serialize-javascript");
 
 /***/ })
 /******/ ]);

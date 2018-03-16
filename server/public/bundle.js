@@ -7909,6 +7909,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
             case 2:
               res = _context.sent;
 
+              // const res = await axios.get('http://react-ssr-api.herokuapp.com/users/xss'); // XSS attack
 
               dispatch({
                 type: FETCH_USERS,
