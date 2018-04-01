@@ -21,7 +21,9 @@ export default (req, store) => {
   // serialize instead JSON.stringify for avoid XSS attacks
   return `
     <html>
-      <head></head>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+      </head>
       <meta name="viewport" content="width=device-width">
       <body>
         <div id="root">${content}</div>
